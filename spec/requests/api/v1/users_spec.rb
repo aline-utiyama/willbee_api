@@ -30,4 +30,64 @@ RSpec.describe Api::V1::UsersController, type: :request do
       end
     end
   end
+
+  # Test for update
+  describe "PATCH #update" do
+    context "when the user exists" do
+      context "with valid parameters" do
+
+        let!(:user) { create(:user) }
+        let(:token) { user.generate_token }
+        let(:valid_params) do
+          {
+            id: user.id,
+            user: {
+              name: "Jane",
+              surname: "Smith",
+              username: "janesmith"
+            }
+          }
+        end
+
+        it "updates the user successfully" do
+          put "/api/v1/users/#{user.id}", params: valid_params, headers: { "Authorization" => "Bearer #{token}" }
+          expect(response).to have_http_status(:ok)
+          expect(JSON.parse(response.body)["message"]).to eq("User updated successfully")
+          expect(JSON.parse(response.body)["user"]["name"]).to eq("Jane")
+          expect(JSON.parse(response.body)["user"]["surname"]).to eq("Smith")
+          expect(JSON.parse(response.body)["user"]["username"]).to eq("janesmith")
+        end
+      end
+
+      context "with invalid parameters" do
+        let!(:user) { create(:user) }
+        let(:token) { user.generate_token }
+        let(:invalid_params) do
+          {
+            id: user.id,
+            user: {
+              name: "",
+              surname: "",
+              username: ""
+            }
+          }
+        end
+
+        it "returns validation errors" do
+          put "/api/v1/users/#{user.id}", params: invalid_params, headers: { "Authorization" => "Bearer #{token}" }
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(JSON.parse(response.body)["errors"]).to include("Name can't be blank")
+          expect(JSON.parse(response.body)["errors"]).to include("Surname can't be blank")
+          expect(JSON.parse(response.body)["errors"]).to include("Username can't be blank")
+        end
+      end
+    end
+
+    context "when the user does not exist" do
+      it "returns a unauthorized error" do
+        put "/api/v1/users/9999", params: { id: 9999, user: { name: "Jane", surname: "Smith", username: "janesmith" } }
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end
