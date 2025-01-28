@@ -7,6 +7,8 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   # Validate password on create (i.e., when creating a new user)
   validates :password, presence: true, length: { minimum: 6 }, on: :create
+  validates :password_confirmation, presence: true, if: -> { password.present? }
+  validates_confirmation_of :password
   # Allow password to be blank on update (i.e., when updating existing user)
   validates :password, length: { minimum: 6 }, allow_blank: true, on: :update
 

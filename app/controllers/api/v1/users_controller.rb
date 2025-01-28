@@ -16,7 +16,7 @@ class Api::V1::UsersController < ApplicationController
 
     if @user.nil?
       render json: { message: "User not found" }, status: :not_found
-    elsif @user.update(user_basic_params)
+    elsif @user.update(user_params)
       render json: { message: "User updated successfully", user: @user }, status: :ok
     else
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
@@ -27,9 +27,5 @@ class Api::V1::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :surname, :email, :username, :password, :password_confirmation)
-  end
-
-  def user_basic_params
-    params.require(:user).permit(:name, :surname, :username)
   end
 end
