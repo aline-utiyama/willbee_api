@@ -10,9 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_21_071144) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_28_081344) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "goals", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "purpose", null: false
+    t.string "repeat_term", null: false
+    t.time "repeat_time", null: false
+    t.string "advice"
+    t.boolean "set_reminder", default: false
+    t.integer "reminder_minutes"
+    t.string "duration", default: "Entire day", null: false
+    t.integer "duration_length"
+    t.string "duration_measure"
+    t.string "graph_type", default: "Dot", null: false
+    t.boolean "is_private", default: true
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_goals_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -24,4 +43,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_21_071144) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
+
+  add_foreign_key "goals", "users"
 end

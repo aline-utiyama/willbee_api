@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       post "auth/login", to: "auth#login"
       get "/users/settings", to: "users#show"
       resources :users, only: [ :create, :update ]
+      resources :goals
     end
   end
 end
