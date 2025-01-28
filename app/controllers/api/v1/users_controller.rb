@@ -1,6 +1,14 @@
 class Api::V1::UsersController < ApplicationController
   before_action :authenticate_user!, except: [ :create ]
 
+  def show
+    if current_user
+      render json: { user: current_user.as_json(only: [ :id, :name, :surname, :username, :email ]) }, status: :ok
+    else
+      render json: { error: "User not found" }, status: :not_found
+    end
+  end
+
   def create
     @user = User.new(user_params)
 
