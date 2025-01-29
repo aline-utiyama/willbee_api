@@ -127,8 +127,7 @@ bin/rails console
 If the application includes tests, you can run them using:
 
 ```bash
-bin/rails test       # For Minitest
-bin/rspec            # For RSpec (if configured)
+bin/rspec            # For RSpec
 ```
 
 ### Precompile Assets (Optional)
@@ -172,14 +171,14 @@ bin/rails assets:precompile
 git clone <repository-url>
 cd <repository-folder>
 
+# If repo is already cloned, update the repo with the most recent version
+git pull origin main
+
 # Install Ruby gems
 bundle install
 
 # Configure the database and run migrations
 bin/rails db:create db:migrate db:seed
-
-# Install frontend dependencies
-yarn install
 
 # Start the Rails server
 bin/rails server
