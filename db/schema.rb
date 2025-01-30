@@ -22,10 +22,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_28_081344) do
     t.string "advice"
     t.boolean "set_reminder", default: false
     t.integer "reminder_minutes"
-    t.string "duration", default: "Entire day", null: false
+    t.string "duration", default: "entire_day", null: false
     t.integer "duration_length"
     t.string "duration_measure"
-    t.string "graph_type", default: "Dot", null: false
+    t.string "graph_type", default: "dot", null: false
     t.boolean "is_private", default: true
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
