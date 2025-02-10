@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_28_081344) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_07_014401) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "goal_progresses", force: :cascade do |t|
+    t.bigint "goal_id", null: false
+    t.date "date", null: false
+    t.boolean "completed", default: false, null: false
+    t.datetime "checked_at"
+    t.integer "current_streak", default: 0
+    t.integer "longest_streak", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["goal_id"], name: "index_goal_progresses_on_goal_id"
+  end
 
   create_table "goals", force: :cascade do |t|
     t.string "title", null: false
@@ -44,5 +56,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_28_081344) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "goal_progresses", "goals"
   add_foreign_key "goals", "users"
 end

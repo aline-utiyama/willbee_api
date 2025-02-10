@@ -25,7 +25,7 @@ class Api::V1::GoalsController < ApplicationController
   def show
     @goal = current_user.goals.find_by(id: params[:id])
     if @goal
-      render json: @goal
+      render json: @goal.as_json(include: :goal_progresses)
     else
       render json: { error: "Goal not found" }, status: :not_found
     end
