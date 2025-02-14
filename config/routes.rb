@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get "/users/settings", to: "users#show"
       resources :users, only: [ :create, :update ]
       resources :goals
+      resources :goal_plans
     end
   end
 end

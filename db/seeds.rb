@@ -11,15 +11,24 @@
 # Clear existing data to prevent duplicates
 User.destroy_all
 Goal.destroy_all
+GoalPlan.destroy_all
 
 # Create Users
-
-
 user = User.create!(
   name: "Test",
   surname: "User",
   username: "testuser",
   email: "testuser@example.com",
+  password: "password123",
+  password_confirmation: "password123"
+)
+
+# Create a user to associate with goal plans
+plan_creator = User.create!(
+  name: "Mary",
+  surname: "Jane",
+  username: "maryjane",
+  email: "maryjane@example.com",
   password: "password123",
   password_confirmation: "password123"
 )
@@ -65,3 +74,17 @@ end
 end
 
 puts "✅ Created #{Goal.count} goals"
+
+# Create Goal Plans
+goal_plans = [
+  { title: "Morning Routine", purpose: "Start the day fresh", repeat_term: "daily", repeat_time: "06:30", advice: "Drink water first", duration: "specific_duration", duration_length: 30, duration_measure: "minutes", creator: user },
+  { title: "Read a Book", purpose: "Improve knowledge", repeat_term: "daily", repeat_time: "20:00", advice: "Start with 10 pages", duration: "specific_duration", duration_length: 60, duration_measure: "minutes", creator: user },
+  { title: "Workout", purpose: "Stay fit", repeat_term: "daily", repeat_time: "18:00", advice: "Focus on strength", duration: "entire_day", creator: user },
+  { title: "Stop eating Sugar", purpose: "Stay healthier", repeat_term: "daily", repeat_time: "22:00", advice: "Focus on your health", duration: "entire_day", creator: user }
+]
+
+goal_plans.each do |plan|
+  GoalPlan.create!(plan)
+end
+
+puts "✅ Seeded #{GoalPlan.count} goal plans!"
