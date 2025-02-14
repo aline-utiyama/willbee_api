@@ -10,9 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_07_014401) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_13_063826) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "goal_plans", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "purpose", null: false
+    t.string "repeat_term", null: false
+    t.time "repeat_time", null: false
+    t.string "advice"
+    t.string "duration", default: "entire_day", null: false
+    t.integer "duration_length"
+    t.string "duration_measure"
+    t.bigint "creator_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_goal_plans_on_creator_id"
+  end
 
   create_table "goal_progresses", force: :cascade do |t|
     t.bigint "goal_id", null: false

@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
   has_many :goals, dependent: :destroy
+  has_many :goal_plans, foreign_key: :creator_id, dependent: :destroy
 
   validates :name, presence: true
   validates :surname, presence: true
