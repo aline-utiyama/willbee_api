@@ -22,7 +22,7 @@ class Api::V1::GoalPlansController < ApplicationController
   def show
     @goal_plan = current_user.goal_plans.find_by(id: params[:id])
     if @goal_plan
-      render json: @goal_plan.as_json
+      render json: @goal_plan.as_json(include: :creator)
     else
       render json: { error: "Goal Plan not found" }, status: :not_found
     end
