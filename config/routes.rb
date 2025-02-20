@@ -14,6 +14,10 @@ Rails.application.routes.draw do
       resources :users, only: [ :create, :update ]
       resources :goals
       resources :goal_plans
+
+      resources :goal_progresses, only: [] do
+        patch :complete_today, on: :collection
+      end
     end
   end
 end
