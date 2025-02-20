@@ -31,7 +31,7 @@ class Api::V1::GoalProgressesController < ApplicationController
     last_progress = goal.goal_progresses.where("date < ?", Date.current).order(date: :desc).first
 
     # If there’s no previous progress or it was missed, reset the streak
-    if !last_progress.completed
+    if last_progress.nil? || !last_progress.completed
       return 0
     else
       return last_progress.current_streak + 1
