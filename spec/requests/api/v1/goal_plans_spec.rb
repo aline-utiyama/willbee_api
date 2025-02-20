@@ -10,6 +10,7 @@ RSpec.describe Api::V1::GoalPlansController, type: :request do
       repeat_term: "daily",
       repeat_time: "07:00",
       advice: "Start with stretching",
+      category: "Health",
       duration: "specific_duration",
       duration_length: 30,
       duration_measure: "minutes"
@@ -21,6 +22,16 @@ RSpec.describe Api::V1::GoalPlansController, type: :request do
     it "returns all goal plans" do
       get "/api/v1/goal_plans", headers: { "Authorization" => "Bearer #{token}" }
       expect(response).to have_http_status(:success)
+    end
+
+    it "returns only goal plans for a specific category" do
+      get "/api/v1/goal_plans", params: { category: "Health" }, headers: { "Authorization" => "Bearer #{token}" }
+      
+      expect(response).to have_http_status(:success)
+      json_response = JSON.parse(response.body)
+      
+      expect(json_response.length).to eq(1)
+      expect(json_response.first["category"]).to eq("Health")
     end
   end
 

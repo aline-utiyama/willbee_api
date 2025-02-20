@@ -5,6 +5,7 @@ FactoryBot.define do
     repeat_term { "daily" }
     repeat_time { "09:00" }
     advice { "Start with basic syntax" }
+    category { "Health" }
     duration { "specific_duration" }
     duration_length { 60 }
     duration_measure { "minutes" }

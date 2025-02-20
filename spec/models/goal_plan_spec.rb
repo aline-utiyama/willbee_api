@@ -9,6 +9,7 @@ RSpec.describe GoalPlan, type: :model do
       purpose: "Stay fit and healthy",
       repeat_term: "daily",
       repeat_time: "09:00",
+      category: "Health",
       advice: "Start with stretching",
       duration: "specific_duration",
       duration_length: 30,

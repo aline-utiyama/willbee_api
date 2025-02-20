@@ -77,10 +77,10 @@ puts "✅ Created #{Goal.count} goals"
 
 # Create Goal Plans
 goal_plans = [
-  { title: "Morning Routine", purpose: "Start the day fresh", repeat_term: "daily", repeat_time: "06:30", advice: "Drink water first", duration: "specific_duration", duration_length: 30, duration_measure: "minutes", creator: user },
-  { title: "Read a Book", purpose: "Improve knowledge", repeat_term: "daily", repeat_time: "20:00", advice: "Start with 10 pages", duration: "specific_duration", duration_length: 60, duration_measure: "minutes", creator: user },
-  { title: "Workout", purpose: "Stay fit", repeat_term: "daily", repeat_time: "18:00", advice: "Focus on strength", duration: "entire_day", creator: user },
-  { title: "Stop eating Sugar", purpose: "Stay healthier", repeat_term: "daily", repeat_time: "22:00", advice: "Focus on your health", duration: "entire_day", creator: user }
+  { title: "Morning Routine", purpose: "Start the day fresh", category: "Personal Growth", repeat_term: "daily", repeat_time: "06:30", advice: "Drink water first", duration: "specific_duration", duration_length: 30, duration_measure: "minutes", creator: user },
+  { title: "Read a Book", purpose: "Improve knowledge", category: "Reading", repeat_term: "daily", repeat_time: "20:00", advice: "Start with 10 pages", duration: "specific_duration", duration_length: 60, duration_measure: "minutes", creator: user },
+  { title: "Workout", purpose: "Stay fit", repeat_term: "daily", category: "Fitness", repeat_time: "18:00", advice: "Focus on strength", duration: "entire_day", creator: user },
+  { title: "Stop eating Sugar", purpose: "Stay healthier", category: "Health", repeat_term: "daily", repeat_time: "22:00", advice: "Focus on your health", duration: "entire_day", creator: user }
 ]
 
 goal_plans.each do |plan|

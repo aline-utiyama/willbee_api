@@ -4,7 +4,12 @@ class Api::V1::GoalPlansController < ApplicationController
 
   # GET /api/v1/goal_plans
   def index
-    @goal_plans = GoalPlan.all
+    if params[:category].present?
+      @goal_plans = GoalPlan.where(category: params[:category])
+    else
+      @goal_plans = GoalPlan.all
+    end
+
     render json: @goal_plans
   end
 
@@ -55,6 +60,6 @@ class Api::V1::GoalPlansController < ApplicationController
   end
 
   def goal_plan_params
-    params.require(:goal_plan).permit(:title, :purpose, :repeat_term, :repeat_time, :advice, :duration, :duration_length, :duration_measure)
+    params.require(:goal_plan).permit(:title, :purpose, :repeat_term, :repeat_time, :advice, :duration, :duration_length, :duration_measure, :category)
   end
 end
