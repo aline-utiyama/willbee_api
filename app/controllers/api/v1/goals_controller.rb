@@ -5,7 +5,7 @@ class Api::V1::GoalsController < ApplicationController
   def index
     @goals = current_user.goals
     if @goals
-      render json: @goals
+      render json: @goals.as_json(include: :goal_progresses)
     else
       render json: { error: "Goals not found" }, status: :not_found
     end
