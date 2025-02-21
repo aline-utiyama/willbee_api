@@ -10,7 +10,7 @@ class Api::V1::GoalPlansController < ApplicationController
       @goal_plans = GoalPlan.all
     end
 
-    render json: @goal_plans
+    render json: @goal_plans.as_json(include: :creator)
   end
 
   # POST /api/v1/goal_plans
