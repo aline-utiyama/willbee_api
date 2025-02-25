@@ -1,6 +1,7 @@
 class Goal < ApplicationRecord
   belongs_to :user
   has_many :goal_progresses, dependent: :destroy
+  has_many :notifications, through: :goal_progresses
 
   validates :title, presence: true
   validates :purpose, presence: true
