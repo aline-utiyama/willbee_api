@@ -57,3 +57,8 @@ gem "sidekiq", "~> 7.3"
 gem 'sidekiq-cron'
 gem 'redis'
 
+gem "cloudinary"
+
+
+gem "active_storage_validations", "~> 2.0"
+gem "dotenv-rails"
