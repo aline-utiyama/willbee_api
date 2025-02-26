@@ -8,6 +8,8 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+require 'open-uri'
+
 # Clear existing data to prevent duplicates
 User.destroy_all
 Goal.destroy_all
@@ -84,7 +86,10 @@ goal_plans = [
 ]
 
 goal_plans.each do |plan|
-  GoalPlan.create!(plan)
+  plan = GoalPlan.create!(plan)
+  file = OpenURI.open_uri('https://picsum.photos/200')
+  plan.image.attach(io: file, filename: 'nes.png', content_type: 'image/png')
+  plan.save
 end
 
 puts "✅ Seeded #{GoalPlan.count} goal plans!"
