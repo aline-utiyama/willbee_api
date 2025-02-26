@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_20_040550) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_25_025801) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -61,6 +61,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_040550) do
     t.index ["user_id"], name: "index_goals_on_user_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title"
+    t.text "message"
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "goal_progress_id", null: false
+    t.index ["goal_progress_id"], name: "index_notifications_on_goal_progress_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "surname"
@@ -74,4 +86,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_040550) do
 
   add_foreign_key "goal_progresses", "goals"
   add_foreign_key "goals", "users"
+  add_foreign_key "notifications", "goal_progresses"
+  add_foreign_key "notifications", "users"
 end

@@ -1,0 +1,3 @@
+send_reminder_notification:
+  cron: "0 * * * *"
+  class: "SendReminderNotificationJob"

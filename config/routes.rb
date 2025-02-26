@@ -1,3 +1,6 @@
+require 'sidekiq/web'
+require 'sidekiq/cron/web'
+
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -17,7 +20,17 @@ Rails.application.routes.draw do
 
       resources :goal_progresses, only: [] do
         patch :complete_today, on: :collection
+        patch :complete_progress_through_notifications
+      end
+
+      resources :notifications, only: [] do
+        patch :mark_as_read
       end
     end
+  end
+
+  if Rails.env.development? || Rails.env.production?
+    mount Sidekiq::Web => "/sidekiq"
+    mount ActionCable.server => "/cable"
   end
 end
