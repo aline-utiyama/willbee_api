@@ -14,7 +14,10 @@ class Api::V1::GoalProgressesController < ApplicationController
 
     # Calculate the streak value
     goal_progress.current_streak = calculate_streak(goal)
-    goal_progress.longest_streak = [goal_progress.current_streak, goal.goal_progresses.maximum(:longest_streak) || 0].max
+
+    # Ensure longest streak is properly updated
+    previous_longest_streak = goal.goal_progresses.maximum(:longest_streak) || 0
+    goal_progress.longest_streak = [goal_progress.current_streak, previous_longest_streak].max
 
 
     if goal_progress.save
@@ -25,7 +28,6 @@ class Api::V1::GoalProgressesController < ApplicationController
   end
 
   def complete_progress_through_notifications
-
     today = params[:date_today]
 
     # Find the goal progress and notification
@@ -37,9 +39,12 @@ class Api::V1::GoalProgressesController < ApplicationController
     # Set checked as today's date
     goal_progress.checked_at = today
 
-    # # Calculate the streak value
+    # Calculate the streak value
     goal_progress.current_streak = calculate_streak(goal_progress.goal)
-    goal_progress.longest_streak = [goal_progress.current_streak, goal_progress.goal.goal_progresses.maximum(:longest_streak) || 0].max
+
+    # Ensure longest streak is properly updated
+    previous_longest_streak = goal_progress.goal.goal_progresses.maximum(:longest_streak) || 0
+    goal_progress.longest_streak = [goal_progress.current_streak, previous_longest_streak].max
 
 
     if goal_progress.save
@@ -54,14 +59,23 @@ class Api::V1::GoalProgressesController < ApplicationController
   private
 
   def calculate_streak(goal)
-    # Get the last recorded progress before today
-    last_progress = goal.goal_progresses.where("date < ?", Date.current).order(date: :desc).first
+    progresses = goal.goal_progresses.where(completed: true).order(:date)
 
-    # If there’s no previous progress or it was missed, reset the streak
-    if last_progress.nil? || !last_progress.completed
-      return 0
-    else
-      return last_progress.current_streak + 1
+    # First completed goal should have a streak of 1
+    return 1 if progresses.empty?
+
+    streak = 1
+    previous_date = nil
+
+    progresses.each do |progress|
+      if previous_date && progress.date == previous_date + 1.day
+        streak += 1
+      else
+        streak = 1 # Reset streak if there is a gap
+      end
+      previous_date = progress.date
     end
+
+    streak
   end
 end
