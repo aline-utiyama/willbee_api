@@ -10,7 +10,7 @@ class Api::V1::GoalPlansController < ApplicationController
       @goal_plans = GoalPlan.all
     end
 
-    render json: @goal_plans.as_json(include: :creator)
+    render json: @goal_plans.as_json(include: :creator, methods: :image_url)
   end
 
   # POST /api/v1/goal_plans
@@ -25,9 +25,9 @@ class Api::V1::GoalPlansController < ApplicationController
 
   # GET /api/v1/goal_plans/:id
   def show
-    @goal_plan = current_user.goal_plans.find_by(id: params[:id])
+    @goal_plan = current_user.goal_plans.with_attached_image.find_by(id: params[:id])
     if @goal_plan
-      render json: @goal_plan.as_json(include: :creator)
+      render json: @goal_plan.as_json(include: :creator, methods: [:image_url])
     else
       render json: { error: "Goal Plan not found" }, status: :not_found
     end
@@ -60,6 +60,6 @@ class Api::V1::GoalPlansController < ApplicationController
   end
 
   def goal_plan_params
-    params.require(:goal_plan).permit(:title, :purpose, :repeat_term, :repeat_time, :advice, :duration, :duration_length, :duration_measure, :category)
+    params.require(:goal_plan).permit(:title, :purpose, :repeat_term, :repeat_time, :advice, :duration, :duration_length, :duration_measure, :category, :image)
   end
 end

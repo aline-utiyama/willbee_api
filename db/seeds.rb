@@ -8,6 +8,8 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+require 'open-uri'
+
 # Clear existing data to prevent duplicates
 User.destroy_all
 Goal.destroy_all
@@ -23,6 +25,10 @@ user = User.create!(
   password_confirmation: "password123"
 )
 
+user_img = OpenURI.open_uri("https://i.pravatar.cc/40?img=5")
+user.image.attach(io: user_img, filename: 'nes.png', content_type: 'image/png')
+user.save
+
 # Create a user to associate with goal plans
 plan_creator = User.create!(
   name: "Mary",
@@ -32,6 +38,10 @@ plan_creator = User.create!(
   password: "password123",
   password_confirmation: "password123"
 )
+
+plan_creator_img = OpenURI.open_uri("https://i.pravatar.cc/40?img=1")
+plan_creator.image.attach(io: plan_creator_img, filename: 'nes.png', content_type: 'image/png')
+plan_creator.save
 
 
 puts "✅ Created #{User.count} users"
@@ -84,7 +94,10 @@ goal_plans = [
 ]
 
 goal_plans.each do |plan|
-  GoalPlan.create!(plan)
+  plan = GoalPlan.create!(plan)
+  file = OpenURI.open_uri('https://picsum.photos/200')
+  plan.image.attach(io: file, filename: 'nes.png', content_type: 'image/png')
+  plan.save
 end
 
 puts "✅ Seeded #{GoalPlan.count} goal plans!"
