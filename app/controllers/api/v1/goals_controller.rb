@@ -6,8 +6,6 @@ class Api::V1::GoalsController < ApplicationController
     @goals = current_user.goals
     if @goals
       render json: @goals.as_json(include: :goal_progresses)
-    else
-      render json: { error: "Goals not found" }, status: :not_found
     end
   end
 
@@ -53,12 +51,6 @@ class Api::V1::GoalsController < ApplicationController
   end
 
   private
-
-  def set_goal
-    @goal = current_user.goals.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render json: { error: "Goal not found" }, status: :not_found
-  end
 
   def goal_params
     params.require(:goal).permit(

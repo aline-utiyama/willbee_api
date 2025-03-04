@@ -36,14 +36,4 @@ class Goal < ApplicationRecord
     end
   end
 
-  def ensure_progress_for_missing_days
-    last_progress = goal_progresses.order(date: :desc).first
-    return unless last_progress
-
-    (last_progress.date + 1.day..Date.today).each do |date|
-      goal_progresses.find_or_create_by(date: date) do |progress|
-        progress.completed = false # Default to not completed
-      end
-    end
-  end
 end

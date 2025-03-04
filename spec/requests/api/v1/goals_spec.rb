@@ -78,5 +78,13 @@ RSpec.describe "Api::V1::Goals", type: :request do
       }.to change(Goal, :count).by(-1)
       expect(response).to have_http_status(:no_content)
     end
+
+    context "when the goal does not exist" do
+      it "returns a 404 error" do
+        delete "/api/v1/goals/9999", headers: { "Authorization" => "Bearer #{token}" }
+        expect(response).to have_http_status(:not_found)
+        expect(JSON.parse(response.body)["error"]).to eq("Goal not found")
+      end
+    end
   end
 end

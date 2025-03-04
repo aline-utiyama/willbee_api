@@ -6,6 +6,36 @@ RSpec.describe Api::V1::UsersController, type: :request do
   let(:valid_attributes) { attributes_for(:user) }
   let(:invalid_attributes) { { name: '', email: 'invalid@example.com', password: '123', password_confirmation: '123' } }
 
+  # Test for show
+  describe "GET #show" do
+    context "when the user is authenticated" do
+      let(:user) { create(:user) }
+      let(:token) { user.generate_token }
+
+      it "returns the user details" do
+        get "/api/v1/users/settings", headers: { "Authorization" => "Bearer #{token}" }
+
+        expect(response).to have_http_status(:ok)
+        json_response = JSON.parse(response.body)
+
+        expect(json_response["user"]["id"]).to eq(user.id)
+        expect(json_response["user"]["name"]).to eq(user.name)
+        expect(json_response["user"]["surname"]).to eq(user.surname)
+        expect(json_response["user"]["username"]).to eq(user.username)
+        expect(json_response["user"]["email"]).to eq(user.email)
+      end
+    end
+
+    context "when the user is not authenticated" do
+      it "returns a 401 error" do
+        get "/api/v1/users/settings", headers: { "Authorization" => "Bearer invalid_token" }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(JSON.parse(response.body)["error"]).to eq("Unauthorized")
+      end
+    end
+  end
+
   # Test for create
   describe 'POST #create' do
     context 'with valid parameters' do

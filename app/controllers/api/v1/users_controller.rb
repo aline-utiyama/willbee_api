@@ -4,8 +4,6 @@ class Api::V1::UsersController < ApplicationController
   def show
     if current_user
       render json: { user: current_user.as_json(only: [ :id, :name, :surname, :username, :email ], methods: [:image_url]) }, status: :ok
-    else
-      render json: { error: "User not found" }, status: :not_found
     end
   end
 
@@ -22,9 +20,7 @@ class Api::V1::UsersController < ApplicationController
   def update
     @user = User.find_by(id: params[:id])
 
-    if @user.nil?
-      render json: { message: "User not found" }, status: :not_found
-    elsif @user.update(user_params)
+    if @user.update(user_params)
       render json: { message: "User updated successfully", user: @user }, status: :ok
     else
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity

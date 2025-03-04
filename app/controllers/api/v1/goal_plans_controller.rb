@@ -28,8 +28,6 @@ class Api::V1::GoalPlansController < ApplicationController
     @goal_plan = current_user.goal_plans.with_attached_image.find_by(id: params[:id])
     if @goal_plan
       render json: @goal_plan.as_json(include: :creator, methods: [:image_url])
-    else
-      render json: { error: "Goal Plan not found" }, status: :not_found
     end
   end
 

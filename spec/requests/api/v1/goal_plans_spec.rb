@@ -85,5 +85,18 @@ RSpec.describe Api::V1::GoalPlansController, type: :request do
       }.to change(GoalPlan, :count).by(-1)
       expect(response).to have_http_status(:no_content)
     end
+
+    let(:other_user) { create(:user, email: "otheruser@test.com", username: "otheruser") } # A different user
+    let(:other_token) { other_user.generate_token }
+
+    it "prevents a user from deleting someone else's goal plan" do
+      delete "/api/v1/goal_plans/#{goal_plan.id}", headers: { "Authorization" => "Bearer #{other_token}" }
+
+      expect(response).to have_http_status(:forbidden)
+      json_response = JSON.parse(response.body)
+
+      expect(json_response["error"]).to eq("You can only delete your own goal plans.")
+      expect(GoalPlan.exists?(goal_plan.id)).to be_truthy # Ensure the record still exists
+    end
   end
 end
