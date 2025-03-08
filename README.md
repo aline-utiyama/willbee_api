@@ -112,6 +112,63 @@ By default, the server will be available at `http://localhost:4000`.
 
 ---
 
+## Running Redis and Sidekiq
+
+To ensure background jobs are processed correctly, make sure you have Redis installed and running before starting Sidekiq.
+
+### 1. Start Redis Server
+
+If Redis is not installed, install it using:
+
+```bash
+# macOS (using Homebrew)
+brew install redis
+
+# Ubuntu/Debian
+sudo apt update && sudo apt install redis-server
+
+# Windows (via WSL recommended)
+sudo apt install redis-server
+```
+
+Once installed, start Redis with:
+
+```bash
+redis-server
+```
+
+You can check if Redis is running with:
+
+```bash
+redis-cli ping
+```
+
+If it responds with `PONG`, Redis is running successfully.
+
+### 2. Start Sidekiq
+
+Ensure you have Sidekiq installed in your Rails project. If not, add it to your Gemfile:
+
+```ruby
+gem 'sidekiq'
+```
+
+Then install the gem:
+
+```bash
+bundle install
+```
+
+Run Sidekiq with:
+
+```bash
+bundle exec sidekiq
+```
+
+Sidekiq should now be processing jobs. Check the logs for any errors.
+
+---
+
 ## Additional Commands
 
 ### Running the Rails Console
@@ -179,6 +236,12 @@ bundle install
 
 # Configure the database and run migrations
 bin/rails db:create db:migrate db:seed
+
+# Start Redis server
+redis-server
+
+# Start Sidekiq
+bundle exec sidekiq
 
 # Start the Rails server
 bin/rails server
