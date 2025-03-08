@@ -17,6 +17,9 @@ class SendReminderNotificationJob < ApplicationJob
 
     # Iterate over each goal
     goals.each do |goal|
+      # Remove old notifications (not from today)
+      goal.user.notifications.where.not(created_at: Date.today.all_day).destroy_all
+
       # Get the goal progress that matches today's date
       todays_progress = goal.goal_progresses.find_or_create_by(date: Date.today)
 
