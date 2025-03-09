@@ -15,7 +15,7 @@ class Api::V1::GoalPlansController < ApplicationController
 
   # POST /api/v1/goal_plans
   def create
-    @goal_plan = current_user.goal_plans.new(goal_plan_params)
+    @goal_plan = GoalPlan.new(goal_plan_params)
     if @goal_plan.save
       render json: @goal_plan, status: :created
     else
@@ -25,7 +25,7 @@ class Api::V1::GoalPlansController < ApplicationController
 
   # GET /api/v1/goal_plans/:id
   def show
-    @goal_plan = current_user.goal_plans.with_attached_image.find_by(id: params[:id])
+    @goal_plan = GoalPlan.with_attached_image.find_by(id: params[:id])
     if @goal_plan
       render json: @goal_plan.as_json(include: :creator, methods: [:image_url])
     end
