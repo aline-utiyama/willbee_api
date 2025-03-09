@@ -47,7 +47,7 @@ plan_creator.save
 puts "✅ Created #{User.count} users"
 
 # Create Goals
-10.times do |i|
+2.times do |i|
   Goal.create!(
     title: "Entire Day Goal #{i + 1}",
     purpose: "Purpose for goal #{i + 1}",
@@ -65,7 +65,7 @@ puts "✅ Created #{User.count} users"
   )
 end
 
-10.times do |i|
+2.times do |i|
   Goal.create!(
     title: "Specific time Goal  #{i + 1}",
     purpose: "Purpose for goal #{i + 1}",
@@ -87,10 +87,40 @@ puts "✅ Created #{Goal.count} goals"
 
 # Create Goal Plans
 goal_plans = [
-  { title: "Morning Routine", purpose: "Start the day fresh", category: "Personal Growth", repeat_term: "daily", repeat_time: "06:30", advice: "Drink water first", duration: "specific_duration", duration_length: 30, duration_measure: "minutes", creator: user },
-  { title: "Read a Book", purpose: "Improve knowledge", category: "Reading", repeat_term: "daily", repeat_time: "20:00", advice: "Start with 10 pages", duration: "specific_duration", duration_length: 60, duration_measure: "minutes", creator: user },
-  { title: "Workout", purpose: "Stay fit", repeat_term: "daily", category: "Fitness", repeat_time: "18:00", advice: "Focus on strength", duration: "entire_day", creator: user },
-  { title: "Stop eating Sugar", purpose: "Stay healthier", category: "Health", repeat_term: "daily", repeat_time: "22:00", advice: "Focus on your health", duration: "entire_day", creator: user }
+  # Personal Growth
+  { title: "Morning Meditation", purpose: "Cultivate mindfulness and reduce stress for a fresh start.", category: "Personal Growth", repeat_term: "daily", repeat_time: "07:00", advice: "Focus on deep breathing", duration: "specific_duration", duration_length: 15, duration_measure: "minutes", creator: plan_creator },
+  { title: "Journaling", purpose: "Reflect on daily experiences to boost self-awareness.", category: "Personal Growth", repeat_term: "daily", repeat_time: "21:00", advice: "Write at least 3 sentences", duration: "specific_duration", duration_length: 10, duration_measure: "minutes", creator: plan_creator },
+  { title: "Learn a New Skill", purpose: "Enhance personal growth by practicing a new ability.", category: "Personal Growth", repeat_term: "daily", repeat_time: "19:00", advice: "Practice consistently", duration: "specific_duration", duration_length: 60, duration_measure: "minutes", creator: plan_creator },
+
+  # Fitness
+  { title: "Morning Stretch", purpose: "Improve flexibility and prevent injuries with daily stretching.", category: "Fitness", repeat_term: "daily", repeat_time: "06:30", advice: "Hold each stretch for 30 seconds", duration: "specific_duration", duration_length: 10, duration_measure: "minutes", creator: plan_creator },
+  { title: "Cardio Workout", purpose: "Increase stamina and heart health through regular cardio.", category: "Fitness", repeat_term: "daily", repeat_time: "17:00", advice: "Start with light jogging", duration: "specific_duration", duration_length: 45, duration_measure: "minutes", creator: plan_creator },
+  { title: "Strength Training", purpose: "Build muscle and boost endurance with consistent workouts.", category: "Fitness", repeat_term: "daily", repeat_time: "18:00", advice: "Increase weights gradually", duration: "specific_duration", duration_length: 40, duration_measure: "minutes", creator: plan_creator },
+
+  # Sports
+  { title: "Play Soccer", purpose: "Improve agility, teamwork, and overall physical fitness.", category: "Sports", repeat_term: "daily", repeat_time: "17:30", advice: "Warm up before playing", duration: "specific_duration", duration_length: 90, duration_measure: "minutes", creator: plan_creator },
+  { title: "Tennis Practice", purpose: "Enhance coordination, reaction speed, and precision.", category: "Sports", repeat_term: "daily", repeat_time: "16:00", advice: "Focus on footwork", duration: "specific_duration", duration_length: 60, duration_measure: "minutes", creator: plan_creator },
+  { title: "Swimming", purpose: "Strengthen muscles and improve endurance with low impact.", category: "Sports", repeat_term: "daily", repeat_time: "15:00", advice: "Improve breathing techniques", duration: "specific_duration", duration_length: 45, duration_measure: "minutes", creator: plan_creator },
+
+  # Reading
+  { title: "Read a Book", purpose: "Expand knowledge and enhance vocabulary through reading.", category: "Reading", repeat_term: "daily", repeat_time: "20:30", advice: "Read at least 10 pages", duration: "specific_duration", duration_length: 30, duration_measure: "minutes", creator: plan_creator },
+  { title: "Read News Articles", purpose: "Stay updated on global events and develop critical thinking.", category: "Reading", repeat_term: "daily", repeat_time: "08:00", advice: "Use trusted sources", duration: "specific_duration", duration_length: 15, duration_measure: "minutes", creator: plan_creator },
+  { title: "Listen to Audiobooks", purpose: "Learn new concepts while commuting or multitasking.", category: "Reading", repeat_term: "daily", repeat_time: "19:30", advice: "Pick educational content", duration: "specific_duration", duration_length: 60, duration_measure: "minutes", creator: plan_creator },
+
+  # Music
+  { title: "Practice an Instrument", purpose: "Improve musical skills and build discipline through practice.", category: "Music", repeat_term: "daily", repeat_time: "17:00", advice: "Focus on technique", duration: "specific_duration", duration_length: 30, duration_measure: "minutes", creator: plan_creator },
+  { title: "Learn Music Theory", purpose: "Understand the structure behind music for better performance.", category: "Music", repeat_term: "daily", repeat_time: "18:30", advice: "Start with basic notes", duration: "specific_duration", duration_length: 45, duration_measure: "minutes", creator: plan_creator },
+  { title: "Compose a Song", purpose: "Boost creativity and develop songwriting skills daily.", category: "Music", repeat_term: "daily", repeat_time: "20:00", advice: "Experiment with melodies", duration: "specific_duration", duration_length: 120, duration_measure: "minutes", creator: plan_creator },
+
+  # Health
+  { title: "Stay Hydrated", purpose: "Maintain energy levels and support overall well-being.", category: "Health", repeat_term: "daily", repeat_time: "09:00", advice: "Drink at least 2 liters of water", duration: "entire_day", creator: plan_creator },
+  { title: "Eat a Balanced Diet", purpose: "Ensure proper nutrition for long-term health benefits.", category: "Health", repeat_term: "daily", repeat_time: "12:00", advice: "Include more vegetables", duration: "entire_day", creator: plan_creator },
+  { title: "Improve Sleep Routine", purpose: "Enhance focus and recovery by improving sleep quality.", category: "Health", repeat_term: "daily", repeat_time: "22:30", advice: "Avoid screens before bed", duration: "entire_day", creator: plan_creator },
+
+  # Career
+  { title: "Update Resume", purpose: "Keep career documents updated for new opportunities.", category: "Career", repeat_term: "daily", repeat_time: "10:00", advice: "Highlight recent achievements", duration: "specific_duration", duration_length: 60, duration_measure: "minutes", creator: plan_creator },
+  { title: "Network with Professionals", purpose: "Expand career connections and discover new opportunities.", category: "Career", repeat_term: "daily", repeat_time: "14:00", advice: "Engage on LinkedIn", duration: "specific_duration", duration_length: 30, duration_measure: "minutes", creator: plan_creator },
+  { title: "Learn a New Skill", purpose: "Develop abilities to enhance career growth and success.", category: "Career", repeat_term: "daily", repeat_time: "19:00", advice: "Take online courses", duration: "specific_duration", duration_length: 90, duration_measure: "minutes", creator: plan_creator }
 ]
 
 goal_plans.each do |plan|
