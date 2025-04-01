@@ -53,7 +53,7 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 5.0' # Simplifies common tests
 end
 
-gem "sidekiq", "~> 7.3"
+gem "sidekiq", "~> 8.0"
 gem 'sidekiq-cron'
 gem 'redis'
 
