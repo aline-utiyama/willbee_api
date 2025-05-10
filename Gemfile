@@ -50,7 +50,7 @@ group :development, :test do
 
   gem 'rspec-rails', '~> 6.0'      # RSpec integration with Rails
   gem 'factory_bot_rails'
-  gem 'shoulda-matchers', '~> 5.0' # Simplifies common tests
+  gem 'shoulda-matchers', '~> 6.4' # Simplifies common tests
 end
 
 gem "sidekiq", "~> 7.3"
